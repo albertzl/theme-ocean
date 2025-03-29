@@ -15,7 +15,8 @@
             </h3>
             <p
               class="text-xs tabular-nums text-zinc-500 dark:text-zinc-400"
-              x-i18n-params:post.publishedAt="{date: post.spec.publishTime}"
+              th:attr="data-date=${#dates.format(post.spec.publishTime,'yyyy-MM-dd')}"
+              x-text="$t('post.publishedAt', {date: $el.dataset.date})">              
             ></p>
           </div>
           <div class="inline-flex items-center gap-1 text-xs text-zinc-600 dark:text-zinc-500">

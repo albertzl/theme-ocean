@@ -71,12 +71,12 @@
         th:if="${not theme.config.layout.hide_author}"
         class="text-sm font-medium text-zinc-900 dark:text-zinc-100"
         th:text="${not #strings.isEmpty(theme.config.layout.common_author) ? theme.config.layout.common_author : post.owner.displayName}"
-      ></span>
-      <span
-        class="text-sm tabular-nums text-zinc-600 dark:text-zinc-300"
-        x-i18n-params:post.publishedAt="{date: post.spec.publishTime}"
-      >
-      </span>
+      ></span>      
+      <span 
+         class="text-sm tabular-nums text-zinc-600 dark:text-zinc-300"
+         th:attr="data-date=${#dates.format(post.spec.publishTime,'yyyy-MM-dd')}"
+         x-text="$t('post.publishedAt', {date: $el.dataset.date})">
+    </span>
     </div>
   </div>
 </div>
