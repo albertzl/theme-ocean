@@ -54,9 +54,9 @@ export default {
   },
   // Post
   post: {
-    publishedAt: 'Published at',
+    publishedAt: 'Published at {date}',
     updatedAt: 'Updated at',
-    visits: 'Views',
+    visits: '{count} Views',
     tags: 'Tags',
     toc: 'Table of contents',
     tocEmpty: 'No table of contents',

@@ -54,9 +54,9 @@ export default {
   },
   // 文章
   post: {
-    publishedAt: '发布于',
+    publishedAt: '发布于 {date}',
     updatedAt: '更新于',
-    visits: '阅读数',
+    visits: '{count} 阅读',
     commentsCount: '{count} 评论',
     likesCount: '{count} 点赞',
     prev: '上一篇',

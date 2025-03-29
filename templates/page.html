@@ -25,13 +25,25 @@
               th:text="${not #strings.isEmpty(theme.config.layout.common_author) ? theme.config.layout.common_author : singlePage.owner.displayName}"
             ></span>
             <div class="flex items-center gap-2 text-xs font-light text-zinc-600 dark:text-zinc-100">
-              <span th:text="${'发布于 '+#dates.format(singlePage.spec.publishTime,'yyyy-MM-dd')}"></span>
+              <span 
+                th:attr="data-date=${#dates.format(singlePage.spec.publishTime,'yyyy-MM-dd')}"
+                x-text="$t('post.publishedAt', {date: $el.dataset.date})">
+              </span>
               <span class="text-zinc-300 dark:text-zinc-200">/</span>
-              <span th:text="${singlePage.stats.visit}+' 阅读'"></span>
+              <span 
+                th:attr="data-visits=${singlePage.stats.visit}" 
+                x-text="$t('post.visits', {count: $el.dataset.visits})">
+              </span>
               <span class="text-zinc-300 dark:text-zinc-200">/</span>
-              <span th:text="${singlePage.stats.comment}+ ' 评论'"></span>
+              <span 
+                th:attr="data-comments=${singlePage.stats.comment}" 
+                x-text="$t('post.commentsCount', {count: $el.dataset.comments})">
+              </span>
               <span class="text-zinc-300 dark:text-zinc-200">/</span>
-              <span th:text="${singlePage.stats.upvote}+' 点赞'"></span>
+              <span 
+                th:attr="data-likes=${singlePage.stats.upvote}" 
+                x-text="$t('post.likesCount', {count: $el.dataset.likes})">
+              </span>
             </div>
           </div>
         </div>
