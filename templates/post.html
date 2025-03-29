@@ -44,7 +44,7 @@
               <span
                 th:if="${not theme.config.layout.hide_author}"
                 class="text-sm font-semibold text-zinc-900 dark:text-zinc-100"
-                th:text="${not #strings.isEmpty(theme.config.layout.common_author) ? theme.config.layout.common_author : page.owner.displayName}"
+                th:text="${not #strings.isEmpty(theme.config.layout.common_author) ? theme.config.layout.common_author : post.owner.displayName}"
               ></span>
               <span 
                 th:attr="data-date=${#dates.format(post.spec.publishTime,'yyyy-MM-dd')}"
