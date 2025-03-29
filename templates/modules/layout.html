@@ -13,6 +13,14 @@
     <script>
       main.initColorScheme("[[${theme.config.style.color_scheme}]]",[[${theme.config.style.enable_change_color_scheme}]])
     </script>
+    <script>
+      // 在页面加载后手动触发一次多语言处理
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+          window.dispatchEvent(new CustomEvent('localeChanged'));
+        }, 100);
+      });
+    </script>
   </head>
   <body class="dark:bg-zinc-900" x-data="search" 
         th:classappend="${isSidebar == false ? 'bg-[#F8F9FC]' : 'bg-[#F2F2F2]'}">
@@ -32,7 +40,7 @@
           <div class="mt-6 grid grid-cols-1 gap-6">
             <template x-if="searchData.total == 0">
               <div class="mt-6 flex items-center justify-center">
-                <span class="text-sm font-light text-gray-600">当前没有文章</span>
+                <span class="text-sm font-light text-gray-600" x-i18n="common.noResults">当前没有文章</span>
               </div>
             </template>
             <template x-for="sear in searchData.hits">
@@ -69,5 +77,9 @@
     <th:block th:if="${footer != null}">
       <th:block th:replace="${footer}" />
     </th:block>
+    <script>
+      // 在页面内容加载完成后再次触发多语言处理
+      window.dispatchEvent(new CustomEvent('localeChanged'));
+    </script>
   </body>
 </html>

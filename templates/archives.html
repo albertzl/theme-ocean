@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html
   xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{modules/layout :: html(title = ${site.title}, header = null, content = ~{::content}, head = null, footer = null, sidebar = null, contentClass = null, isSidebar = true)}"
+  th:replace="~{modules/layout :: html(title = '归档 - ' + ${site.title}, header = null, content = ~{::content}, head = null, footer = null, sidebar = null, contentClass = null, isSidebar = true)}"
 >
   <th:block th:fragment="content">
     <th:block th:replace="~{modules/category-filter}" />
@@ -9,19 +9,30 @@
     <div
       id="post-list"
       th:if="${archives.total gt 0}"
-      th:with="archivesItems=${archives.items},list_layout=${theme.config.layout.post_list_layout}"
-      class="mt-10 grid grid-cols-1 gap-6"
-      th:classappend="${list_layout == 'grid_3' ? 'md:grid-cols-2 xl:grid-cols-3' : ''} + ' ' + ${list_layout == 'grid_2' ? 'md:grid-cols-2' : ''}"
+      th:with="postGroups=${archives.groupedItems},list_layout=${theme.config.layout.post_list_layout}"
+      class="rounded-xl bg-white p-4 shadow transition-all duration-500 hover:shadow-md dark:bg-zinc-800"
     >
-      <th:block th:each="archive : ${archivesItems}">
-        <th:block th:each="month : ${archive.months}">
-          <th:block th:each="post : ${month.posts}">
-            <th:block
-              th:replace="~{modules/post-card :: post-card(${post},true,true,true,${list_layout == 'single' ? 'column' : 'row'})}"
+      <div th:each="postGroup : ${postGroups}" class="mb-6 last:mb-0">
+        <h2
+          class="relative mb-4 pb-2 text-lg font-medium before:absolute before:bottom-0 before:h-[2px] before:w-2 before:rounded-lg before:bg-[#3296ef] dark:text-zinc-300"
+        >
+          <span th:text="${postGroup.key}"></span>
+        </h2>
+        <div class="space-y-3">
+          <div th:each="post : ${postGroup.value}" class="flex w-full items-center">
+            <time
+              th:datetime="${post.spec.publishTime}"
+              th:text="${#dates.format(post.spec.publishTime, 'MM-dd')}"
+              class="mr-4 font-mono text-zinc-400"
             />
-          </th:block>
-        </th:block>
-      </th:block>
+            <a
+              th:href="@{${post.status.permalink}}"
+              th:text="${post.spec.title}"
+              class="flex-1 truncate hover:text-[#3296ef]"
+            />
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="mt-9 flex items-center justify-end" th:if="${archives.hasPrevious() || archives.hasNext()}">
@@ -30,6 +41,7 @@
           <a
             class="rounded border border-[#686B74] py-2 px-3 text-sm tabular-nums text-[#686B74] hover:border-[#3296ef] hover:bg-[#3296ef] hover:text-white"
             th:href="@{${archives.prevUrl}}"
+            x-text="$t('pagination.prev')"
           >
             上一页
           </a>
@@ -48,7 +60,7 @@
                 class="rounded border border-[#686B74] py-2 px-3 text-sm tabular-nums text-[#686B74] hover:border-[#3296ef] hover:bg-[#3296ef] hover:text-white"
                 x-text="item"
                 :class="{'border-[#3296ef] bg-[#3296ef] text-white':page===item}"
-                th:attr="'x-bind:href'=|'/archives/page/'+item|"
+                th:attr="'x-bind:href'=|'/archives/page/' + item|"
               >
               </a>
             </template>
@@ -58,6 +70,7 @@
           <a
             class="rounded border border-[#686B74] py-2 px-3 text-sm tabular-nums text-[#686B74] hover:border-[#3296ef] hover:bg-[#3296ef] hover:text-white"
             th:href="@{${archives.nextUrl}}"
+            x-text="$t('pagination.next')"
           >
             下一页
           </a>
@@ -66,7 +79,9 @@
     </div>
 
     <div th:if="${archives.total == 0}" class="mt-6 flex items-center justify-center">
-      <span class="text-sm font-light text-gray-600">当前没有文章</span>
+      <span class="text-sm font-light text-zinc-600 dark:text-zinc-200" x-text="$t('archive.archiveEmpty')">
+        暂无文章
+      </span>
     </div>
   </th:block>
 </html>

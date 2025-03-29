@@ -1,9 +1,9 @@
 apiVersion: theme.halo.run/v1alpha1
 kind: Theme
 metadata:
-  name: theme-ocean
+  name: theme-ocean-albert
 spec:
-  displayName: Ocean
+  displayName: Ocean-albert
   author:
     name: halo-dev
     website: https://halo.run
@@ -11,7 +11,7 @@ spec:
   logo: https://halo.run/logo
   website: https://github.com/f2ccloud/theme-ocean
   repo: https://github.com/f2ccloud/theme-ocean.git
-  settingName: "theme-ocean-setting"
-  configMapName: "theme-ocean-configMap"
+  settingName: "theme-ocean-albert-setting"
+  configMapName: "theme-ocean-albert-configMap"
   version: 1.5.0
   require: ">=2.20.0"

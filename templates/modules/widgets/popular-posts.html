@@ -1,9 +1,9 @@
 <div
   class="w-full cursor-pointer overflow-hidden rounded-xl bg-white p-3 shadow transition-all duration-500 hover:shadow-md dark:bg-zinc-800"
 >
-  <h2 class="inline-flex items-center gap-2 text-base dark:text-zinc-50">
-    <span class="i-tabler-stairs-up text-lg text-red-600 dark:text-red-700"></span>
-    热门文章
+  <h2 class="inline-flex items-center gap-2 text-lg dark:text-zinc-50">
+    <span class="i-tabler-flame text-lg"></span>
+    <span x-i18n="common.popularPosts">热门文章</span>
   </h2>
   <div>
     <ul role="list" class="divide-y divide-zinc-100 dark:divide-zinc-700" th:with="posts = ${postFinder.list(1,10)}">
@@ -15,7 +15,7 @@
             </h3>
             <p
               class="text-xs tabular-nums text-zinc-500 dark:text-zinc-400"
-              th:text="${#dates.format(post.spec.publishTime,'yyyy-MM-dd')+' 发布'}"
+              x-i18n-params:post.publishedAt="{date: post.spec.publishTime}"
             ></p>
           </div>
           <div class="inline-flex items-center gap-1 text-xs text-zinc-600 dark:text-zinc-500">

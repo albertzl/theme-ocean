@@ -67,9 +67,10 @@
           ></a>
         </span>
         <div class="xs:text-center text-sm font-light text-zinc-500 dark:text-zinc-300">
-          Copyright ©
+          <span x-i18n="footer.copyright"></span> ©
           <th:block th:text="${#dates.format(new java.util.Date().getTime(), 'yyyy')}" />
-          <a href="/" class="hover:underline" th:text="${site.title}"></a>. All Rights Reserved. <br />Powered by
+          <a href="/" class="hover:underline" th:text="${site.title}"></a>. <span x-i18n="common.allRightsReserved"></span>. <br />
+          <span x-i18n="footer.poweredBy"></span>
           <a href="https://halo.run" class="hover:underline" target="_blank">Halo</a>.
         </div>
       </div>
@@ -127,7 +128,7 @@
     <span class="text-sm text-zinc-500 dark:text-zinc-300 sm:text-center">
       ©
       <th:block th:text="${#dates.format(new java.util.Date().getTime(), 'yyyy')}" />
-      <a href="/" class="hover:underline" th:text="${site.title}"></a>. All Rights Reserved. Powered by
+      <a href="/" class="hover:underline" th:text="${site.title}"></a>. <span x-i18n="common.allRightsReserved"></span>. <span x-i18n="footer.poweredBy"></span>
       <a href="https://halo.run" class="hover:underline" target="_blank">Halo</a>.
     </span>
     <div
@@ -186,7 +187,7 @@
   <span class="container mx-auto block text-center text-sm text-zinc-500 dark:text-zinc-300">
     ©
     <th:block th:text="${#dates.format(new java.util.Date().getTime(), 'yyyy')}" />
-    <a href="/" class="hover:underline" th:text="${site.title}"></a>. All Rights Reserved. Powered by
+    <a href="/" class="hover:underline" th:text="${site.title}"></a>. <span x-i18n="common.allRightsReserved"></span>. <span x-i18n="footer.poweredBy"></span>
     <a href="https://halo.run" class="hover:underline" target="_blank">Halo</a>.
   </span>
 </footer>
@@ -268,9 +269,10 @@
           ></a>
         </span>
         <div class="text-sm text-[#adb5bd] sm:text-center font-light dark:text-zinc-300">
-          Copyright ©
+          <span x-i18n="footer.copyright"></span> ©
           <th:block th:text="${#dates.format(new java.util.Date().getTime(), 'yyyy')}" />
-          <a href="/" class="hover:underline" th:text="${site.title}"></a>. All Rights Reserved. <br />Powered by
+          <a href="/" class="hover:underline" th:text="${site.title}"></a>. <span x-i18n="common.allRightsReserved"></span>. <br />
+          <span x-i18n="footer.poweredBy"></span>
           <a href="https://halo.run" class="hover:underline" target="_blank">Halo</a>.
         </div>
       </div>

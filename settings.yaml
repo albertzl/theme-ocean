@@ -1,7 +1,7 @@
 apiVersion: v1alpha1
 kind: Setting
 metadata:
-  name: theme-ocean-setting
+  name: theme-ocean-albert-setting
 spec:
   forms:
     - group: layout
@@ -89,7 +89,7 @@ spec:
           id: header_background_image
           key: header_background_image
           label: Banner背景图片
-          value: /themes/theme-ocean/assets/images/default-background.png
+          value: /themes/theme-ocean-albert/assets/images/default-background.png
         - $formkit: radio
           name: search_method
           value: page

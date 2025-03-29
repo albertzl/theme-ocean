@@ -29,9 +29,9 @@
               <span class="text-zinc-300 dark:text-zinc-200">/</span>
               <span th:text="${singlePage.stats.visit}+' 阅读'"></span>
               <span class="text-zinc-300 dark:text-zinc-200">/</span>
-              <span th:text="${singlePage.stats.comment}+ ' 评论'"> </span>
+              <span th:text="${singlePage.stats.comment}+ ' 评论'"></span>
               <span class="text-zinc-300 dark:text-zinc-200">/</span>
-              <span th:text="${singlePage.stats.upvote}+' 点赞'"> </span>
+              <span th:text="${singlePage.stats.upvote}+' 点赞'"></span>
             </div>
           </div>
         </div>
@@ -59,7 +59,7 @@
       <hr class="my-10 dark:border-zinc-700" />
       <!-- https://github.com/halo-sigs/plugin-comment-widget -->
       <div th:if="${pluginFinder.available('PluginCommentWidget')}">
-        <h2 class="mb-2 text-base font-medium text-zinc-900 dark:text-zinc-50">评论</h2>
+        <h2 class="mb-2 text-base font-medium text-zinc-900 dark:text-zinc-50" x-i18n="post.comments">评论</h2>
         <halo:comment
           group="content.halo.run"
           kind="SinglePage"

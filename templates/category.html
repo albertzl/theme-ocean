@@ -26,6 +26,7 @@
           <a
             class="rounded border border-[#686B74] py-2 px-3 text-sm tabular-nums text-[#686B74] hover:border-[#3296ef] hover:bg-[#3296ef] hover:text-white"
             th:href="@{${posts.prevUrl}}"
+            x-text="$t('pagination.prev')"
           >
             上一页
           </a>
@@ -54,6 +55,7 @@
           <a
             class="rounded border border-[#686B74] py-2 px-3 text-sm tabular-nums text-[#686B74] hover:border-[#3296ef] hover:bg-[#3296ef] hover:text-white"
             th:href="@{${posts.nextUrl}}"
+            x-text="$t('pagination.next')"
           >
             下一页
           </a>
@@ -62,7 +64,7 @@
     </div>
 
     <div th:if="${posts.total == 0}" class="mt-6 flex items-center justify-center">
-      <span class="text-sm font-light text-zinc-600 dark:text-zinc-200">此分类下没有文章</span>
+      <span class="text-sm font-light text-zinc-600 dark:text-zinc-200" x-text="$t('category.categoryEmpty')">此分类下没有文章</span>
     </div>
   </th:block>
 </html>

@@ -99,14 +99,54 @@
                 class="cursor-pointer text-lg text-gray-600 transition-all hover:text-blue-600 dark:text-slate-100"
                 :class="colorScheme.icon"
                 @click="[main.setColorScheme(nextColorScheme.value,true), currentValue = nextColorScheme.value]"
-                :title="`当前主题：${colorScheme.label}，点击切换为：${nextColorScheme.label}`"
+                :title="$t('nav.theme', {current: colorScheme.label, next: nextColorScheme.label})"
               ></div>
             </li>
-            <!-- https://github.com/halo-sigs/plugin-search-widget -->
+            <!-- 语言切换 -->
+            <li
+              x-data="i18nSwitcher"
+              class="relative cursor-pointer transition-all"
+            >
+              <div
+                x-data="dropdown"
+                @mouseenter="open()"
+                @mouseleave="close()"
+                class="relative"
+              >
+                <div class="cursor-pointer text-lg text-gray-600 transition-all hover:text-blue-600 dark:text-slate-100">
+                  <div class="i-tabler-language text-lg"></div>
+                </div>
+                <ul
+                  @mouseenter="open()"
+                  @mouseleave="close()"
+                  x-show="show"
+                  x-transition:enter="transition ease-out duration-100"
+                  x-transition:enter-start="transform opacity-0 scale-95"
+                  x-transition:enter-end="transform opacity-100 scale-100"
+                  x-transition:leave="transition ease-in duration-75"
+                  x-transition:leave-start="transform opacity-100 scale-100"
+                  x-transition:leave-end="transform opacity-0 scale-95"
+                  class="absolute right-0 z-10 mt-2 w-32 divide-y divide-gray-50 overflow-hidden rounded bg-white shadow dark:divide-zinc-600 dark:bg-zinc-700"
+                >
+                  <template x-for="locale in locales" :key="locale">
+                    <li class="flex w-full items-center text-left text-sm hover:bg-gray-50 dark:hover:bg-zinc-600">
+                      <a
+                        class="h-full w-full truncate px-4 py-2 text-gray-600 hover:text-blue-600 dark:text-zinc-50 dark:hover:text-gray-300"
+                        href="javascript:void(0)"
+                        @click="switchLocale(locale)"
+                        :class="{ 'font-bold': isActive(locale) }"
+                        x-text="localeNames[locale]"
+                      ></a>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+            </li>
+            <!-- 搜索按钮 -->
             <li th:if="${pluginFinder.available('PluginSearchWidget')}">
               <a
                 href="javascript:SearchWidget.open()"
-                title="搜索"
+                :title="$t('common.search')"
                 class="text-zinc-600 hover:text-blue-600 dark:text-zinc-100"
               >
                 <div class="i-tabler-search text-lg"></div>
@@ -169,8 +209,8 @@
                       class="h-full w-full truncate px-4 py-2 text-gray-600 hover:text-blue-600 dark:text-zinc-50 dark:hover:text-gray-300"
                       href="/uc"
                       target="_blank"
+                      x-i18n="nav.profile"
                     >
-                      个人资料
                     </a>
                   </li>
                   <li
@@ -181,8 +221,8 @@
                       class="h-full w-full truncate px-4 py-2 text-gray-600 hover:text-blue-600 dark:text-zinc-50 dark:hover:text-gray-300"
                       href="/console"
                       target="_blank"
+                      x-i18n="nav.console"
                     >
-                      控制台
                     </a>
                   </li>
                   <li
@@ -192,8 +232,8 @@
                     <a
                       class="h-full w-full truncate px-4 py-2 text-gray-600 hover:text-blue-600 dark:text-zinc-50 dark:hover:text-gray-300"
                       href="/logout"
+                      x-i18n="nav.logout"
                     >
-                      退出登录
                     </a>
                   </li>
                   <li
@@ -203,8 +243,8 @@
                     <a
                       class="h-full w-full truncate px-4 py-2 text-gray-600 hover:text-blue-600 dark:text-zinc-50 dark:hover:text-gray-300"
                       href="/login"
+                      x-i18n="nav.login"
                     >
-                      登录
                     </a>
                   </li>
                 </ul>
@@ -258,7 +298,7 @@
                     stroke-linejoin="round"
                   ></circle>
                 </svg>
-                输入关键字
+                <span x-i18n="common.search"></span>
               </button>
             </div>
             <div
@@ -266,7 +306,7 @@
               th:if="${not #lists.isEmpty(theme.config.banner.tags)}"
             >
               <p>
-                热门查询：
+                <span x-i18n="common.search"></span>：
                 <th:block th:each="tag,tagStat : ${theme.config.banner.tags}">
                   <th:block th:with="tagInfo = ${tagFinder.getByName(tag)}" th:if="${tagStat.index lt 3}">
                     <span>
@@ -288,7 +328,7 @@
                 x-model="keys"
                 @keyup.enter="keywords"
                 class="dark:highlight-white/5 flex w-full items-center rounded-full bg-[#F1F3F4] py-1.5 pl-12 pr-3 text-sm leading-6 text-zinc-400 shadow-sm ring-1 ring-slate-900/10 focus:bg-white focus:shadow-2xl focus:outline-none focus:ring-2 dark:bg-zinc-800"
-                placeholder="输入关键字"
+                :placeholder="$t('common.search')"
               />
               <template x-if="keys">
                 <button
@@ -346,7 +386,7 @@
               th:if="${not #lists.isEmpty(theme.config.banner.tags)}"
             >
               <p>
-                热门查询：
+                <span x-i18n="common.search"></span>：
                 <th:block th:each="tag,tagStat : ${theme.config.banner.tags}">
                   <span th:with="tagInfo = ${tagFinder.getByName(tag)}" th:if="${tagStat.index lt 3}">
                     <a
@@ -392,7 +432,7 @@
       x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
       x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
       x-transition:leave="ease-in duration-100"
-      x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+      x-transition:leave-start="opacity-100 translate-y-0 sm:scale-95"
       x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
       @click.outside="open = false"
     >
@@ -403,7 +443,7 @@
           tabindex="0"
           @click="open = false"
         ></button>
-        <h2 class="text-sm font-medium text-gray-600 dark:text-slate-300">菜单</h2>
+        <h2 class="text-sm font-medium text-gray-600 dark:text-slate-300" x-i18n="common.menu">菜单</h2>
       </div>
       <nav class="mt-6">
         <ul class="-my-2 divide-y divide-gray-100 text-sm text-gray-800 dark:divide-slate-800 dark:text-slate-100">

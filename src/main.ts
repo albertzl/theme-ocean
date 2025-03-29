@@ -7,6 +7,9 @@ import colorSchemeSwitcher from "./alpine-data/color-scheme-switcher";
 import pagination from "./alpine-data/pagination";
 import postUtil from "./alpine-data/post-util";
 import search from "./alpine-data/search";
+import i18nSwitcher from "./alpine-data/i18n-switcher";
+import installI18nDirective from "./alpine-directives/i18n";
+import { initLocale, t } from "./i18n";
 
 window.Alpine = Alpine;
 
@@ -18,6 +21,11 @@ Alpine.data("pagination", pagination);
 Alpine.data("postUtil", postUtil);
 // @ts-ignore
 Alpine.data("search", search);
+Alpine.data("i18nSwitcher", i18nSwitcher);
+
+installI18nDirective();
+
+initLocale();
 
 Alpine.start();
 
@@ -33,6 +41,7 @@ const onScroll = () => {
 window.addEventListener("scroll", onScroll);
 
 export function generateToc() {
+  // @ts-ignore 避免 tocbot 类型错误
   tocbot.init({
     tocSelector: ".toc",
     contentSelector: "#content",
@@ -99,15 +108,14 @@ export function removeHTMLTag(str: String) {
 /*阅读时间*/
 export function readTime() {
   const contentHtml: HTMLElement | null = document.getElementById("content");
+  if (!contentHtml) return "";
+  
   // @ts-ignore
   let str = contentHtml.innerHTML;
-  return (
-    "文章共计 " +
-    removeHTMLTag(str).length +
-    " 个字，阅读完成需要 " +
-    Math.ceil(removeHTMLTag(str).length / 400) +
-    " 分钟"
-  );
+  const textLength = removeHTMLTag(str).length;
+  const minutes = Math.ceil(textLength / 400);
+  
+  return t("common.readTime", { count: textLength, time: minutes });
 }
 
 // 快速返回顶部或底部
@@ -127,3 +135,10 @@ const onScrollToTop = () => {
 };
 
 window.addEventListener("scroll", onScrollToTop);
+
+// 添加类型声明，使 window 对象包含 Alpine
+declare global {
+  interface Window {
+    Alpine: typeof Alpine;
+  }
+}

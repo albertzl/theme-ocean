@@ -5,6 +5,7 @@
   <h2
     class="mt-16 mb-8 text-center text-3xl font-light text-[#333] dark:text-zinc-200"
     th:text="${theme.config.index.module_there}"
+    x-i18n="common.featuredPosts"
   >
     推荐阅读
   </h2>
@@ -29,7 +30,7 @@
           class="truncate text-right text-sm font-normal"
           th:if="${#lists.size(post.categories)} gt 0"
           th:style="'color:'+${#annotations.getOrDefault(post.categories[0], 'color', '#0c7be0')}"
-          th:text="${#dates.format(post.spec.publishTime,'yyyy年MM月dd日')}"
+          th:text="${#dates.format(post.spec.publishTime,'yyyy-MM-dd')}"
         >
         </span>
       </div>
